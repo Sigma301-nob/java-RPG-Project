@@ -1,8 +1,22 @@
-public class GamePanel extends Jpanel{
+import java.awt.Graphics;
+import javax.swing.JPanel;
 
-    Game game;
+public class GamePanel extends JPanel{
+
+    private Game game;
+    
+    private Scene currentScene;
+
+    public GamePanel(Game game){
+        this.game = game;
+    }
 
     public void paintComponent(Graphics g){
+        currentScene = game.getCurrentScene();
+
+        if(currentScene != null){
+            currentScene.draw(g);
+        }
     } 
 
 
