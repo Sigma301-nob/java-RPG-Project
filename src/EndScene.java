@@ -1,16 +1,13 @@
 import java.awt.Graphics;
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 
-public class StartScene extends Scene{
+public class EndScene extends Scene{
     
     int x = 0;
 
     public void update(){
-        if(KeyInputHandler.isKeyPressed(KeyEvent.VK_Q)){
-            x = 0;
-        }
+
     }
 
     public void draw(Graphics g){
@@ -18,6 +15,6 @@ public class StartScene extends Scene{
 
          g.setColor(Color.BLACK);
 
-        g.drawString("GameStart",x++,50);
+        g.drawString("GameClear",x++,50);
     }
 }

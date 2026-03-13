@@ -1,15 +1,42 @@
-public class KeyInputHandler{
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 
-    private boolean[] currentKeys;
-    private boolean[] previousLeys;
+public class KeyInputHandler extends KeyAdapter{
 
-    public void update(){
+    private static boolean[] currentKeys = new boolean[256];
+    private static boolean[] previousKeys = new boolean[256];
+
+    public static void update(){
+
+        previousKeys = currentKeys.clone();
     }
 
-    public void isKeyPressed(int keyCode){
+    public void keyPressed(KeyEvent e){
+        int keycode = e.getKeyCode();
+        if(keycode < currentKeys.length){
+            currentKeys[keycode] = true;
+        }
     }
 
-    public void isKeyDown(int keyCode){
+    public void keyReleased(KeyEvent e) {
+        int keycode = e.getKeyCode();
+        if (keycode < currentKeys.length){
+            currentKeys[keycode] = false;
+        }
+    }
+
+    public static boolean isKeyPressed(int keyCode){
+        if(keyCode >= 0 && keyCode < currentKeys.length){
+            return currentKeys[keyCode];
+        }
+        return false;
+    }
+
+    public static boolean isKeyDown(int keyCode){
+        if(!previousKeys[keyCode] && currentKeys[keyCode]){
+            return true;
+        }
+        return false;
     }
     
 }

@@ -4,6 +4,6 @@ public class Main {
     Game game = new Game("テストウィンドウ",400,300);
     game.add(new GamePanel(game));
     game.setVisible(true);
-    game.startGameLoop();    
+    game.startGameLoop();  
   }
 }

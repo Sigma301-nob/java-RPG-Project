@@ -1,11 +1,12 @@
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import java.awt.event.KeyEvent;
 
 public class Game extends JFrame implements Runnable{
 
     private Thread th = null;
 
-    Scene currentScene = new StartScene();
+    Scene currentScene = new StartScene();//場面の初期設定
     JPanel gamePanel;
     KeyInputHandler keyInputHandler;
     Hero Hero;
@@ -16,6 +17,8 @@ public class Game extends JFrame implements Runnable{
         setSize(width,height);
         setLocationRelativeTo(null);
         setResizable(false);
+        setFocusable(true);
+        addKeyListener(new KeyInputHandler()); 
     }
 
     public synchronized void startGameLoop(){
@@ -34,6 +37,7 @@ public class Game extends JFrame implements Runnable{
     public void run(){
         while(th != null){
             try{
+                update();
                 Thread.sleep(25);
                 repaint();
             }catch(InterruptedException e){
@@ -43,17 +47,24 @@ public class Game extends JFrame implements Runnable{
     }
 
     public void update(){
-          if(currentScene != null){
+
+        if(KeyInputHandler.isKeyPressed(KeyEvent.VK_SPACE)){
+            currentScene = new MapScene();
+        }
+
+        if(currentScene != null){
                 currentScene.update();
         }
 
     }
 
-    public void changeScene(Scene nextScene){
+    public Scene changeScene(Scene nextScene){
+        this.currentScene = nextScene;
+        return currentScene;
     }
 
     public Scene getCurrentScene(){
-        return currentScene;
+        return this.currentScene;
     }
 
 }
