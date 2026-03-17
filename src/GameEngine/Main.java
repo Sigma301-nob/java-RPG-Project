@@ -1,9 +1,6 @@
 package GameEngine;
 
 
-import Map.*;
-import Battle.*;
-
 public class Main {
     
   //新しいウィンドウの作成とゲームループの開始

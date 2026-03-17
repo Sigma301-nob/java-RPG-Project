@@ -3,6 +3,8 @@ package GameEngine;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
+import Scene.Scene;
+
 public class GamePanel extends JPanel{
 
     Game game;

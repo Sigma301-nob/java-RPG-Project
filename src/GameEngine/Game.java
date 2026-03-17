@@ -6,26 +6,31 @@ import java.awt.event.KeyEvent;
 
 import Map.*;
 import Battle.*;
+import Scene.*;
+
 public class Game extends JFrame implements Runnable{
 
     private Thread th = null;
 
     Scene currentScene;
+    MapLoader mapLoader;
     JPanel gamePanel;
     KeyInputHandler keyInputHandler;
-    MapModel mapModel;
     Hero hero;
 
     public Game(String title,int width,int height){
         super(title);
+        keyInputHandler = new KeyInputHandler();
+        mapLoader = new MapLoader();
+        mapLoader.loadMap();
         currentScene = new StartScene(this);
-        mapModel = new MapModel();
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width,height);
         setLocationRelativeTo(null);
         setResizable(false);
         setFocusable(true);
-        addKeyListener(new KeyInputHandler()); 
+        addKeyListener(keyInputHandler); 
     }
 
     public synchronized void startGameLoop(){
@@ -45,7 +50,7 @@ public class Game extends JFrame implements Runnable{
         while(th != null){
             try{
                 update();
-                Thread.sleep(16);
+                Thread.sleep(16);  //60fps
                 repaint();
             }catch(InterruptedException e){
                 e.printStackTrace();
@@ -54,6 +59,8 @@ public class Game extends JFrame implements Runnable{
     }
 
     public void update(){
+        keyInputHandler.update(); //ここ以外でkeyInputHandlerのアップデートはしない
+
         if(currentScene != null){
                 currentScene.update();
         }
@@ -65,12 +72,14 @@ public class Game extends JFrame implements Runnable{
         return currentScene;
     }
 
+    public KeyInputHandler getkeyInputHandler(){
+        return keyInputHandler;
+    }
     public Scene getCurrentScene(){
         return this.currentScene;
     }
 
-    public MapModel getmapModel(){
-        return this.mapModel;
+    public MapLoader getMapLoader(){
+        return mapLoader;
     }
-
 }

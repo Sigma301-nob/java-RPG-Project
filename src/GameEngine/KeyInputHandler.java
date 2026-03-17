@@ -9,18 +9,18 @@ public class KeyInputHandler extends KeyAdapter{
     private static boolean[] currentKeys = new boolean[256];
     private static boolean[] previousKeys = new boolean[256];
 
-    public static void update(){
-        previousKeys = currentKeys.clone();
+    public void update(){
+        System.arraycopy(currentKeys, 0, previousKeys, 0, currentKeys.length);
     }
 
-    public static boolean isKeyPressed(int keyCode){
-        if(keyCode >= 0 && keyCode < currentKeys.length){
+    public boolean isKeyPressed(int keyCode){   
+        if(keyCode >= 0 && keyCode < 256){
             return currentKeys[keyCode];
         }
         return false;
     }
 
-    public static boolean isKeyDown(int keyCode){
+    public boolean isKeyDown(int keyCode){
         if(!previousKeys[keyCode] && currentKeys[keyCode]){
             return true;
         }
@@ -29,16 +29,16 @@ public class KeyInputHandler extends KeyAdapter{
 
 
 
-    public void keyPressed(KeyEvent e){
+    public  void keyPressed(KeyEvent e){
         int keycode = e.getKeyCode();
-        if(keycode < currentKeys.length){
+        if(keycode >= 0 && keycode < 256){
             currentKeys[keycode] = true;
         }
     }
 
     public void keyReleased(KeyEvent e) {
         int keycode = e.getKeyCode();
-        if (keycode < currentKeys.length){
+        if (keycode >= 0 && keycode < 256){
             currentKeys[keycode] = false;
         }
     }
