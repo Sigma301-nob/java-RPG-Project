@@ -16,9 +16,8 @@ public class MapScene extends Scene{
    public MapScene(Game game){
         this.game = game;
         model = game.getMapLoader().getcurrentMapModel();
-        view = new MapView();
+        view = new MapView(game.getwindowSizeWidth(),game.getwindowSizeHeight());
 
-        model.getTimer().timerSet(3);
         model.setEncountToFalse();
     }
 //modelの更新と場面転換の有無の判断

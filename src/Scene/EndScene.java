@@ -42,10 +42,10 @@ public class EndScene extends Scene{
         super.paintComponent(g);
 
         g.setColor(Color.BLACK);
-        g.drawString(ending,150,100);
+        g.drawString(ending,600,450);
 
         //動作確認の都合上、ループ構造を作りたかったので追加した
-        g.drawString(timer.getTimer() +"秒後にスタート画面に戻る(初期化はされていない)",60,250);
+        g.drawString(timer.getTimer() +"秒後にスタート画面に戻る(初期化はされていない)",510,850);
            
     }
 }

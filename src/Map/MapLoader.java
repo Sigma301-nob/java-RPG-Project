@@ -5,11 +5,19 @@ public class MapLoader{
     private MapModel currentMapModel;
 
     //mapModelはここ以外ではインスタンス化させない
-    public void loadMap(){
-        currentMapModel = new MapModel();
+    public void loadMap(int mapId){
+        if(mapId == 0){
+            currentMapData = new TestMapData();
+        }
+
+        currentMapModel = new MapModel(currentMapData);
     }
 
     public MapModel getcurrentMapModel(){
         return currentMapModel;
+    }
+
+    public MapData getcurrentMapData(){
+        return currentMapData;
     }
 }

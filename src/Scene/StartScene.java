@@ -9,14 +9,14 @@ import GameEngine.Game;
 
 public class StartScene extends Scene{
 
-    int y = 0;
+    int y = 400;
 
     public StartScene(Game game){
         this.game = game;
     }
 
     public void update(){
-        if(y == 100){
+        if(y == 450){
             game.changeScene(new MapScene(game));
         }
     }
@@ -26,6 +26,6 @@ public class StartScene extends Scene{
 
          g.setColor(Color.BLACK);
 
-        g.drawString("GameStart",150,y++);
+        g.drawString("GameStart",600,y++);
     }
 }

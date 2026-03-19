@@ -18,12 +18,16 @@ public class Game extends JFrame implements Runnable{
     KeyInputHandler keyInputHandler;
     Hero hero;
 
+    private int windowSizeWidth,windowSizeHeight;
+
     public Game(String title,int width,int height){
         super(title);
         keyInputHandler = new KeyInputHandler();
         mapLoader = new MapLoader();
-        mapLoader.loadMap();
+        mapLoader.loadMap(0);
         currentScene = new StartScene(this);
+        windowSizeWidth  = width;
+        windowSizeHeight = height;
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width,height);
@@ -81,5 +85,13 @@ public class Game extends JFrame implements Runnable{
 
     public MapLoader getMapLoader(){
         return mapLoader;
+    }
+
+    public int getwindowSizeWidth(){
+        return windowSizeWidth;
+    }
+
+    public int getwindowSizeHeight(){
+        return windowSizeHeight;
     }
 }
