@@ -15,7 +15,11 @@ public class BattleModel{
     private boolean playerLose;
     private boolean bossDefeat;
 
-    public BattleModel(){
+    public BattleModel(BattleData battleData){
+        turnNumber = 0;
+        isPlayerTurn =true;
+        this.battleData = battleData;
+
         //場面転換の都合上追加したが、残すかは戦闘エンジンを作る人に任せる
         playerWin  = false;
         playerLose = false;
@@ -57,5 +61,9 @@ public class BattleModel{
 
     public boolean isbossDefeat(){
         return bossDefeat;
+    }
+
+    public BattleData getbattlebata(){
+        return battleData;
     }
 }

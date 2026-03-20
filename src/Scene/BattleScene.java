@@ -15,7 +15,8 @@ public class BattleScene extends Scene{
 
     public BattleScene(Game game){
         this.game = game;
-        model = new BattleModel();
+        game.getBattleLoader().createBattle(game.gethero()); 
+        model = game.getBattleLoader().getbBattleModel();
         view  = new BattleView();
     }
 
