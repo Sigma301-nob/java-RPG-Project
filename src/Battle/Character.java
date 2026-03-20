@@ -11,12 +11,37 @@ public abstract class Character{
     protected int def;
 
 
-    public void takeDamage(int damage){
+    public abstract void takeDamage(int damage);
+
+    public abstract boolean isAlive();
+
+    public abstract int calculateDamage(int attackeratk,Character target);
+    
+    public abstract int action(int command, Character target);
+
+    //以下、フィールド取得のためのgetメソッド
+    public int getmaxhp(){
+        return maxhp;
     }
 
-    public void isAlive(){
+    public int getmaxmp(){
+        return maxmp;
     }
 
-    public abstract void action(Character target);
+    public int gethp(){
+        return hp;
+    } 
+
+    public int getmp(){
+        return mp;
+    }
+
+    public int getatk(){
+        return atk;
+    }
+
+    public int getdef(){
+        return def;
+    }
 
 }

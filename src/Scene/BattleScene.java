@@ -23,7 +23,7 @@ public class BattleScene extends Scene{
     public void update(){
         model.update(game.getkeyInputHandler());
 
-        if(model.isWin()){
+        if(model.isWin() || model.isrun()){
             game.changeScene(new MapScene(game));
         }else if(model.isbossDefeat()){
             game.changeScene(new EndScene(game,0));

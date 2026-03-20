@@ -1,10 +1,15 @@
 package Battle;
 
+
+import static java.lang.Math.random;
+
 public class Hero extends Character{
 
     private int level;
     private int exp;
     private final int nextLevelExp = 100;
+
+    private double randomNum;
 
     public Hero(){ 
     name  = "Hero";
@@ -40,45 +45,69 @@ public class Hero extends Character{
     }
 
 
-    public void normalAttack(int enemyNum){
-    }
-
-    public void maginalAttack(int enemyNum){
-    }
-
-    public void RunAway(){
-
-    }
-
-    public void action(Character target){
-    }
-
-
-
-    //以下、フィールド取得のためのgetメソッド
-    public int getmaxhp(){
-        return maxhp;
-    }
-
-    public int getmaxmp(){
-        return maxmp;
-    }
-
-    public int gethp(){
-        return hp;
-    } 
-
-    public int getmp(){
-        return mp;
-    }
-
-    public int getatk(){
+    //attackメソッドは与ダメージを返す
+    public int normalAttack(){
         return atk;
     }
 
-    public int getdef(){
-        return def;
+    public int maginalAttack(){
+        mp = mp - 2;
+        return atk + 2;
     }
+
+    public boolean runAway(){
+        randomNum = Math.random();
+        if(randomNum > 0.33){
+            return true;
+        }
+        return false;
+
+    }
+
+    public void takeDamage(int damage){
+        hp = Math.max( (hp - damage), 0);
+    }
+
+    public boolean isAlive(){
+        if(hp == 0) return true;
+        else return false;
+    }
+
+    public int calculateDamage(int attackerAtk,Character target){
+        
+        int targetDef = target.getdef();
+
+       return Math.max(attackerAtk - targetDef, 0);
+    }
+
+    //処理結果を返す。0;戦闘続行 1;HP0による戦闘終了　2;逃走成功
+
+    //ダメージ計算はアタッカーのクラスでやるほうがいいと思うので、移動した。
+    //理由：攻撃の種類によって計算方法を変えるとなると、modelが大きくなりすぎたり、キャラによって持っている攻撃手段が違うから。
+    public int action (int command,Character target) {
+        int damage;
+        switch(command){
+            case 0:
+                damage = calculateDamage(normalAttack(),target);
+                target.takeDamage(damage);
+                if(target.isAlive()) return 1;
+                else return 0;
+
+            case 1:
+                damage = calculateDamage(maginalAttack(),target);
+                target.takeDamage(damage);
+                if(target.isAlive()) return 1;
+                else return 0;
+
+            case 2:
+                if(runAway()) return 2;
+                else return 0;
+
+            default:
+                return 1;
+        }
+    }
+
 
 
 }
