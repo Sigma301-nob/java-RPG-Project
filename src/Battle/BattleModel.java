@@ -45,6 +45,7 @@ public class BattleModel{
 
     }
 
+    //ここが問題。myturnになってから1秒待機を入れているため、その間攻撃し放題！
     public void update(KeyInputHandler key){
         if(!wait){
             if(isPlayerTurn){           

@@ -3,6 +3,7 @@ package Battle;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.Font;
 
 public class BattleView{
 
@@ -15,6 +16,7 @@ public class BattleView{
     private int enemyMaxmp,enemymp;
 
     private int selectAction;
+
 
 
     public void draw(Graphics g,BattleModel model){
@@ -33,18 +35,24 @@ public class BattleView{
 
         selectAction = model.getcommand();
         g.setColor(Color.BLACK);
-       
+
+        Font statusFont = new Font("SansSerif", Font.BOLD, 18);
+        Font dialogFont = new Font("SansSerif", Font.PLAIN, 20);
+
+
+        g.setFont(statusFont);
         //エネミーのステータス
         g.drawRect(50,50,280,60);
         g.drawString("HP:" + enemyhp + "/" + enemyMaxhp,70,70);
         g.drawString("MP:" + enemymp + "/" + enemyMaxmp,70,95);
 
         //HP・MPバーの塗りつぶしをここに挿入
-
+        g.fillRect( 160, 55, (int)(160 *((double)enemyhp / enemyMaxhp)), 20);
+        g.fillRect( 160, 80, (int)(160 *((double)enemymp / enemyMaxmp)), 20);
 
         g.setColor(Color.BLACK);
-        g.drawRect(140,55,160,20);
-        g.drawRect(140,80,160,20);
+        g.drawRect(160,55,160,20);
+        g.drawRect(160,80,160,20);
 
 
         //エネミー　イメージ
@@ -57,11 +65,12 @@ public class BattleView{
         g.drawString("MP:" + playermp + "/" + playerMaxmp,870,460);
 
         //HP・MPバーの塗りつぶしをここに挿入
-
+        g.fillRect( 960, 420, (int)(160 *((double)playerhp / playerMaxhp)), 20);
+        g.fillRect( 960, 445, (int)(160 *((double)playermp / playerMaxmp)), 20);
 
         g.setColor(Color.BLACK);
-        g.drawRect(940,420,160,20);
-        g.drawRect(940,445,160,20);
+        g.drawRect(960,420,160,20);
+        g.drawRect(960,445,160,20);
 
         //本来は表示ない。デバッグ用にatk・defの値を表示
         g.drawString("atk:" + playeratk + "   ,def:" + playerdef,870,485);
@@ -77,12 +86,12 @@ public class BattleView{
         g.drawString("➤", 120, 385 + (selectAction * 25));
         }
 
-        g.drawString("通常攻撃" , 140, 385);
-        g.drawString("魔法攻撃" , 140, 410);
-        g.drawString("逃げる"     , 140, 435);
+        g.drawString("こうげき" , 140, 385);
+        g.drawString("まほう" , 140, 410);
+        g.drawString("にげる"     , 140, 435);
 
         //ダイアログ(画面下部1/3)
         g.drawRect(50,530,1100,300);
-        g.drawString(" " + model.getisplayerturn() + model.getcommand(), 100, 700);
+        g.setFont(dialogFont);
     }
 }
