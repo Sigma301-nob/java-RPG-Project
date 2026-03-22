@@ -13,11 +13,11 @@ public class MapLoader{
         currentMapModel = new MapModel(currentMapData);
     }
 
-    public MapModel getcurrentMapModel(){
+    public MapModel getCurrentMapModel(){
         return currentMapModel;
     }
 
-    public MapData getcurrentMapData(){
+    public MapData getCurrentMapData(){
         return currentMapData;
     }
 }

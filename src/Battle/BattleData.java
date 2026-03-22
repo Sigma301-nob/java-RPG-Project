@@ -12,11 +12,11 @@ public class BattleData{
         this.enemy = enemy;
     }
 
-    public Hero gethero(){
+    public Hero getHero(){
         return hero;
     }
 
-    public Enemy getenemy(){
+    public Enemy getEnemy(){
         return enemy;
     }
 }

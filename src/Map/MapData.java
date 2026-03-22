@@ -10,7 +10,7 @@ public abstract class MapData{
 
     public abstract int getTileAt(int x,int y);
 
-    public abstract int getMapwidth();
-    public abstract int getMapheight();
+    public abstract int getMapWidth();
+    public abstract int getMapHeight();
     
 }

@@ -44,12 +44,11 @@ public class Enemy extends Character{
 
      public int calculateDamage(int attackerAtk,Character target){
         
-        int targetDef   = target.getdef();
+        int targetDef   = target.getDef();
 
        return Math.max(attackerAtk - targetDef, 0);
     }
 
-    //戦闘続行かどうかを返す。なんか気持ち悪いので後で変更する。
     
     //heroと同様。
     public int action(int command,Character target){

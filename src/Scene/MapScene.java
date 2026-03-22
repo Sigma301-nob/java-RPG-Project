@@ -15,14 +15,14 @@ public class MapScene extends Scene{
     //インスタンス化するときにLoaderの持つmodelのパスをもらう
    public MapScene(Game game){
         this.game = game;
-        model = game.getMapLoader().getcurrentMapModel();
-        view = new MapView(game.getwindowSizeWidth(),game.getwindowSizeHeight());
+        model = game.getMapLoader().getCurrentMapModel();
+        view = new MapView(game.getWindowSizeWidth(),game.getWindowSizeHeight());
 
         model.setEncountToFalse();
     }
 //modelの更新と場面転換の有無の判断
     public void update(){
-        model.update(game.getkeyInputHandler());
+        model.update(game.getKeyInputHandler());
 
         if(model.isEncount()){
 

@@ -5,6 +5,9 @@ import java.awt.Image;
 import java.awt.Color;
 import java.awt.Font;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BattleView{
 
     private int playerMaxhp,playerhp;
@@ -15,25 +18,34 @@ public class BattleView{
     private int enemyMaxhp,enemyhp;
     private int enemyMaxmp,enemymp;
 
+    private int turnNumber;
+
     private int selectAction;
+
+    private String [] dialog;
 
 
 
     public void draw(Graphics g,BattleModel model){
         //データの取得
-        playerMaxhp = model.getbattlebata().gethero().getmaxhp();
-        playerMaxmp = model.getbattlebata().gethero().getmaxmp();
-        playerhp    = model.getbattlebata().gethero().gethp();
-        playermp    = model.getbattlebata().gethero().getmp();
-        playeratk   = model.getbattlebata().gethero().getatk();
-        playerdef   = model.getbattlebata().gethero().getdef();
+        playerMaxhp  = model.getBattlebata().getHero().getMaxHp();
+        playerMaxmp  = model.getBattlebata().getHero().getMaxMp();
+        playerhp     = model.getBattlebata().getHero().getHp();
+        playermp     = model.getBattlebata().getHero().getMp();
+        playeratk    = model.getBattlebata().getHero().getAtk();
+        playerdef    = model.getBattlebata().getHero().getDef();
 
-        enemyMaxhp  = model.getbattlebata().getenemy().getmaxhp();
-        enemyMaxmp  = model.getbattlebata().getenemy().getmaxmp();
-        enemyhp     = model.getbattlebata().getenemy().gethp();
-        enemymp     = model.getbattlebata().getenemy().getmp();
+        enemyMaxhp   = model.getBattlebata().getEnemy().getMaxHp();
+        enemyMaxmp   = model.getBattlebata().getEnemy().getMaxMp();
+        enemyhp      = model.getBattlebata().getEnemy().getHp();
+        enemymp      = model.getBattlebata().getEnemy().getMp();
 
-        selectAction = model.getcommand();
+        turnNumber   = model.getTurnNumber();
+
+        selectAction = model.getCommand();
+        dialog       = model.getDialog();
+
+        int dialogLine = 0;
         g.setColor(Color.BLACK);
 
         Font statusFont = new Font("SansSerif", Font.BOLD, 18);
@@ -90,8 +102,16 @@ public class BattleView{
         g.drawString("まほう" , 140, 410);
         g.drawString("にげる"     , 140, 435);
 
+        //ターン数の表示
+        g.drawString(turnNumber + "ターン目", 1000,70);
+
         //ダイアログ(画面下部1/3)
         g.drawRect(50,530,1100,300);
         g.setFont(dialogFont);
+
+        while(dialog[dialogLine] != null){
+            g.drawString(dialog[dialogLine], 100,600 + dialogLine * 40);
+            dialogLine++;
+        }
     }
 }

@@ -62,22 +62,22 @@ public class MapModel{
     //移動先がマップ外に出ないかと移動可能フラグがtureかを確認
     public void playerMove(KeyInputHandler key){
         if(ableToMove){
-            if((playerY - 1) >= 0 && (playerY - 1) < currentMapData.getMapheight() && currentMapData.isWalkable(playerX,(playerY - 1))){
+            if((playerY - 1) >= 0 && (playerY - 1) < currentMapData.getMapHeight() && currentMapData.isWalkable(playerX,(playerY - 1))){
                 if (key.isKeyPressed(KeyEvent.VK_W))   playerY -= 1;
                 moved();
             }
 
-            if((playerY + 1) >= 0 && (playerY + 1) < currentMapData.getMapheight() && currentMapData.isWalkable(playerX,(playerY + 1))){
+            if((playerY + 1) >= 0 && (playerY + 1) < currentMapData.getMapHeight() && currentMapData.isWalkable(playerX,(playerY + 1))){
                 if (key.isKeyPressed(KeyEvent.VK_S))   playerY += 1;
                 moved();
             }
 
-            if((playerX - 1) >= 0 && (playerX - 1) < currentMapData.getMapwidth()  && currentMapData.isWalkable((playerX - 1),playerY)){
+            if((playerX - 1) >= 0 && (playerX - 1) < currentMapData.getMapWidth()  && currentMapData.isWalkable((playerX - 1),playerY)){
                 if (key.isKeyPressed(KeyEvent.VK_A))   playerX -= 1;
                 moved();
             }
 
-            if((playerX + 1) >= 0 && (playerX + 1) < currentMapData.getMapwidth()  && currentMapData.isWalkable((playerX + 1),playerY)){
+            if((playerX + 1) >= 0 && (playerX + 1) < currentMapData.getMapWidth()  && currentMapData.isWalkable((playerX + 1),playerY)){
                 if (key.isKeyPressed(KeyEvent.VK_D))   playerX += 1;
                 moved();
             }
@@ -96,7 +96,7 @@ public class MapModel{
         }
     }
 
-    public MapData getcurrentMapData(){
+    public MapData getCurrentMapData(){
         return currentMapData;
     }
     

@@ -79,7 +79,7 @@ public class Game extends JFrame implements Runnable{
         return currentScene;
     }
 
-    public KeyInputHandler getkeyInputHandler(){
+    public KeyInputHandler getKeyInputHandler(){
         return keyInputHandler;
     }
     public Scene getCurrentScene(){
@@ -94,15 +94,15 @@ public class Game extends JFrame implements Runnable{
         return battleLoader;
     }
 
-    public Hero gethero(){
+    public Hero getHero(){
         return hero;
     }
 
-    public int getwindowSizeWidth(){
+    public int getWindowSizeWidth(){
         return windowSizeWidth;
     }
 
-    public int getwindowSizeHeight(){
+    public int getWindowSizeHeight(){
         return windowSizeHeight;
     }
 }

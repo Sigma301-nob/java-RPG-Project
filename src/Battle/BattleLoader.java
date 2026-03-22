@@ -17,11 +17,11 @@ public class BattleLoader{
 
     }
 
-    public BattleData getbattleData(){
+    public BattleData getBattleData(){
         return battleData;
     }
 
-    public BattleModel getbBattleModel(){
+    public BattleModel getBattleModel(){
         return battleModel;
     }
 }

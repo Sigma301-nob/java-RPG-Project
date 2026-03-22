@@ -20,27 +20,30 @@ public abstract class Character{
     public abstract int action(int command, Character target);
 
     //以下、フィールド取得のためのgetメソッド
-    public int getmaxhp(){
+    public String getName(){
+        return name;
+    }
+    public int getMaxHp(){
         return maxhp;
     }
 
-    public int getmaxmp(){
+    public int getMaxMp(){
         return maxmp;
     }
 
-    public int gethp(){
+    public int getHp(){
         return hp;
     } 
 
-    public int getmp(){
+    public int getMp(){
         return mp;
     }
 
-    public int getatk(){
+    public int getAtk(){
         return atk;
     }
 
-    public int getdef(){
+    public int getDef(){
         return def;
     }
 

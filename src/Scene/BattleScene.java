@@ -15,13 +15,13 @@ public class BattleScene extends Scene{
 
     public BattleScene(Game game){
         this.game = game;
-        game.getBattleLoader().createBattle(game.gethero()); 
-        model = game.getBattleLoader().getbBattleModel();
+        game.getBattleLoader().createBattle(game.getHero()); 
+        model = game.getBattleLoader().getBattleModel();
         view  = new BattleView();
     }
 
     public void update(){
-        model.update(game.getkeyInputHandler());
+        model.update(game.getKeyInputHandler());
 
         if(model.isWin() || model.isrun()){
             game.changeScene(new MapScene(game));

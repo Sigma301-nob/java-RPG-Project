@@ -4,6 +4,10 @@ import java.awt.event.KeyEvent;
 
 import GameEngine.KeyInputHandler;
 
+import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+
 
 public class BattleModel{
 
@@ -17,70 +21,91 @@ public class BattleModel{
     private boolean bossDefeat;
 
     private boolean ableToPress;        //動いて一定時間はfalseになる
-    private boolean wait;
-    private long currentTime,finalPressedTime,endPlayerTurnTime;
+    private boolean interval;           //ターン交代時の待機。
+    private long currentTime,finalPressedTime,endTurnTime;
     private long delaypressSpeed = 200; //o.2秒に一回移動可能
-    private long waitEnemyTurn = 1000; //1秒エネミーのターンを待つ
+    private long TurnInterval = 1000; //1秒エネミーのターンを待つ
 
 
-    private int command;
-    private int result;                 //現在選んでいる行動の選択肢
+    private int command;                 //現在選んでいる行動の選択肢
+    private int result;                  //アクション後のバトル状況(0;続行　1;HP0による戦闘終了 2;逃亡成功)
+
+    private String [] dialog;              //ダイアログの文章。そんなに多く表示しないので可変長リストにはしてないする。
 
 
     public BattleModel(BattleData battleData){
-        turnNumber = 0;
-        isPlayerTurn =true;
+        turnNumber      = 0;
+        isPlayerTurn    = true;
         this.battleData = battleData;
+        this.dialog = new String[5];
 
-        ableToPress = true;
-        wait = false;
-        command = 0;
+        ableToPress     = true;
+        interval        = false;
+        command         = 0;
 
         //場面転換の都合上追加したが、残すかは戦闘エンジンを作る人に任せる
-        playerWin  = false;
-        playerLose = false;
-        runAway    = false;
-        bossDefeat = false;
-        
-
+        playerWin       = false;
+        playerLose      = false;
+        runAway         = false;
+        bossDefeat      = false;
     }
 
-    //ここが問題。myturnになってから1秒待機を入れているため、その間攻撃し放題！
     public void update(KeyInputHandler key){
-        if(!wait){
+        if(!interval){
             if(isPlayerTurn){           
                 selectAction(key);
                 checkAbleToPressed();
             }else{
                 command = -1;
-                processAction(battleData.getenemy(), battleData.gethero());
+                processAction(battleData.getEnemy(), battleData.getHero());
+                turnNumber++;
             }
         }
-         checkStartPlayerTurn();
+        checkEndInterval();
     }
 
 
     public void processAction(Character attacker,Character target){
-        result = attacker.action(command, target);
+        result       = attacker.action(command, target);
+        dialog[0] = (attacker.getName() + "は" + target.getName() + "に攻撃した");  
+        interval     = true;     
+        endTurnTime  = System.currentTimeMillis();
+
         checkBattleEnd();   
     }
 
     public void checkBattleEnd(){
+
+        //戦闘続行
         if(result == 0){
              isPlayerTurn = !isPlayerTurn;
-             endPlayerTurnTime = System.currentTimeMillis();
+
+
+        //プレイヤーの勝利
         }else if(isPlayerTurn && result == 1){
+            dialog[1] = battleData.getHero().getName() + "は魔物を倒した";
             playerWin  = true;
+
+
+        //プレイヤーの敗北
         }else if(!isPlayerTurn && result == 1){
+            dialog[1] = battleData.getHero().getName() +"は全滅した";
             playerLose = true;
+
+        //逃げ出した
         }else if(result == 2){
+            if(isPlayerTurn){
+                dialog[1] = battleData.getHero().getName() +  "は逃げ出した";
+            }else {
+                dialog[1] = battleData.getEnemy().getName() + "は逃げ出した";
+            }
             runAway = true;
         }
     }
 
     //本来は行動の選択をさせるメソッド。
     public void selectAction(KeyInputHandler key){
-        if(!wait){
+        if(!interval){
             if(ableToPress && isPlayerTurn){
                 if     (key.isKeyPressed(KeyEvent.VK_S) && command < 2) {
                         command++;
@@ -92,12 +117,11 @@ public class BattleModel{
                 }
                 //動作確認用救済措置
                 else if(key.isKeyPressed(KeyEvent.VK_SPACE)){
-                        battleData.gethero().fullHealHpAndMP();
+                        battleData.getHero().fullHealHpAndMP();
                 }
+            
                 if(key.isKeyPressed(KeyEvent.VK_E)){
-                    processAction(battleData.gethero(),battleData.getenemy());
-                    wait = true;
-                    pressed();
+                    processAction(battleData.getHero(),battleData.getEnemy());
                 
                 }
             }
@@ -117,41 +141,60 @@ public class BattleModel{
         }
     }
 
-    public void checkStartPlayerTurn(){
-        if (!wait) return;
+    public void checkEndInterval(){
+        if (!interval) return;
 
         currentTime = System.currentTimeMillis();
-        if(currentTime - endPlayerTurnTime > waitEnemyTurn){
-            wait = false;
+        if(currentTime - endTurnTime > TurnInterval){
+            interval = false;
+            for(int i = 0 ; i > 5; i++){
+                dialog[i] = null;
+            }
             if(isPlayerTurn) command = 0;
         }
     }
 
-    public int getcommand(){
+    public int getCommand(){
         return command;
     }
 
     public  boolean isWin(){
-        return playerWin;
+        if(!interval){
+            return playerWin;
+        }
+        return false;
     }
 
     public boolean isLose(){
-        return playerLose;
+        if(!interval){
+            return playerLose;
+        }
+        return false;
     }
 
     public boolean isrun(){
-        return runAway;
+        if(!interval){
+            return runAway;
+        }
+        return false;
     }
     public boolean isbossDefeat(){
-        return bossDefeat;
+        if(!interval){
+            return bossDefeat;
+        }
+        return false;
     }
 
-    public BattleData getbattlebata(){
+    public BattleData getBattlebata(){
         return battleData;
     }
 
-    public boolean getisplayerturn(){
-        return wait;
+    public int getTurnNumber(){
+        return turnNumber;
+    }
+
+    public String [] getDialog(){
+        return dialog;
     }
     
 }

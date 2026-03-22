@@ -58,11 +58,11 @@ public class TestMapData extends MapData{
         return tileMap[w][h];
     }
 
-    public int getMapwidth(){
+    public int getMapWidth(){
         return width;
     }
 
-    public int getMapheight(){
+    public int getMapHeight(){
         return height;
     }
 }

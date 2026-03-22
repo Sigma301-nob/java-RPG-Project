@@ -29,8 +29,8 @@ public class MapView{
     public void draw(Graphics g,MapModel model){
 
         //マップサイズを求める
-        mapTileWidth  = model.getcurrentMapData().getMapwidth();
-        mapTileHeight = model.getcurrentMapData().getMapheight();
+        mapTileWidth  = model.getCurrentMapData().getMapWidth();
+        mapTileHeight = model.getCurrentMapData().getMapHeight();
 
         tileSize = Math.min( (windowSizeWidth/mapTileWidth) , (windowSizeHeight/mapTileHeight) );
         startW =((windowSizeWidth  - (mapTileWidth  * tileSize)) / 2);
@@ -43,9 +43,9 @@ public class MapView{
                 drawH = startH + (h * tileSize);
 
                 //タイルの種類は番号で管理。番号に応じてタイルの色を変える
-                if(model.getcurrentMapData().getTileAt(w,h) == 0){
+                if(model.getCurrentMapData().getTileAt(w,h) == 0){
                     g.setColor(Color.DARK_GRAY);
-                }else if(model.getcurrentMapData().getTileAt(w, h) == 1){
+                }else if(model.getCurrentMapData().getTileAt(w, h) == 1){
                     g.setColor(Color.BLACK);
                 }
             
