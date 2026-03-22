@@ -116,7 +116,7 @@ public class BattleModel{
                         pressed();
                 }
                 //動作確認用救済措置
-                else if(key.isKeyPressed(KeyEvent.VK_SPACE)){
+                else if(key.isKeyPressed(KeyEvent.VK_H)){
                         battleData.getHero().fullHealHpAndMP();
                 }
             
