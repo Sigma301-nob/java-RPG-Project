@@ -3,6 +3,7 @@ package Battle;
 public abstract class Character{
 
     protected String name;
+    protected int level;
     protected int hp;
     protected int maxhp;
     protected int mp;
@@ -11,13 +12,27 @@ public abstract class Character{
     protected int def;
 
 
-    public abstract void takeDamage(int damage);
+     //HP/MPの消費・回復用のメソッド
+    public void costMp(int cost){
+        mp = Math.max( (mp - cost), 0);
+    }
 
-    public abstract boolean isAlive();
+    public void healMp(int heal){
+        mp = Math.min( (mp + heal), maxmp);
+    }
 
-    public abstract int calculateDamage(int attackeratk,Character target);
-    
-    public abstract int action(int command, Character target);
+    public void takeDamage(int damage){
+        hp = Math.max( (hp - damage), 0);
+    }
+
+    public void healHp(int heal){
+        hp = Math.min( (hp + heal), maxhp);
+    }
+
+    public boolean isAlive(){
+        if(hp > 0) return true;
+        else return false;
+    }
 
     //以下、フィールド取得のためのgetメソッド
     public String getName(){
@@ -45,6 +60,10 @@ public abstract class Character{
 
     public int getDef(){
         return def;
+    }
+
+    public int getLevel(){
+        return level;
     }
 
 }

@@ -11,100 +11,117 @@ import java.util.Collections;
 
 public class BattleModel{
 
+    private BattleOperation operation;
+
     private int turnNumber;
     private boolean isPlayerTurn;
     private BattleData battleData;
 
     private boolean playerWin;
     private boolean playerLose;
-    private boolean runAway;
+    private boolean escapeSuccessful;
     private boolean bossDefeat;
+    private boolean changeToMap;
 
     private boolean ableToPress;        //動いて一定時間はfalseになる
-    private boolean interval;           //ターン交代時の待機。
+    private boolean interval;           //ターン交代時の待機
+    private boolean levelup;            //レベルアップしたかどうか示す
     private long currentTime,finalPressedTime,endTurnTime;
     private long delaypressSpeed = 200; //o.2秒に一回移動可能
     private long TurnInterval = 1000; //1秒エネミーのターンを待つ
 
 
     private int command;                 //現在選んでいる行動の選択肢
-    private int result;                  //アクション後のバトル状況(0;続行　1;HP0による戦闘終了 2;逃亡成功)
-
-    private String [] dialog;              //ダイアログの文章。そんなに多く表示しないので可変長リストにはしてないする。
-
+    private String [] dialog;
 
     public BattleModel(BattleData battleData){
-        turnNumber      = 0;
-        isPlayerTurn    = true;
-        this.battleData = battleData;
-        this.dialog = new String[5];
+        operation = new BattleOperation();
 
-        ableToPress     = true;
-        interval        = false;
-        command         = 0;
+        turnNumber       = 0;
+        isPlayerTurn     = true;
+        this.battleData  = battleData;
+
+        ableToPress      = true;
+        interval         = false;
+        levelup          = false;
+        command          = 0;
+        dialog           = new String[5];
 
         //場面転換の都合上追加したが、残すかは戦闘エンジンを作る人に任せる
-        playerWin       = false;
-        playerLose      = false;
-        runAway         = false;
-        bossDefeat      = false;
+        playerWin        = false;
+        playerLose       = false;
+        escapeSuccessful = false;
+        bossDefeat       = false;
+        changeToMap      = false;
     }
 
     public void update(KeyInputHandler key){
         if(!interval){
-            if(isPlayerTurn){           
-                selectAction(key);
-                checkAbleToPressed();
+            if(!playerWin){
+                if(isPlayerTurn){           
+                    selectAction(key);
+                    checkAbleToPressed();
+                }else{
+                    command = -1;
+                    processAction(0,battleData.getEnemy(), battleData.getHero());
+                    turnNumber++;
+                }
             }else{
-                command = -1;
-                processAction(battleData.getEnemy(), battleData.getHero());
-                turnNumber++;
+                if(!levelup){
+                    levelup = battleData.getHero().isLevelup(battleData.getEnemy().getLevel());
+                }
+                viewStatus(key);
             }
         }
         checkEndInterval();
     }
 
-
-    public void processAction(Character attacker,Character target){
-        result       = attacker.action(command, target);
-        dialog[0] = (attacker.getName() + "は" + target.getName() + "に攻撃した");  
-        interval     = true;     
-        endTurnTime  = System.currentTimeMillis();
-
-        checkBattleEnd();   
-    }
-
-    public void checkBattleEnd(){
-
-        //戦闘続行
-        if(result == 0){
-             isPlayerTurn = !isPlayerTurn;
-
-
-        //プレイヤーの勝利
-        }else if(isPlayerTurn && result == 1){
-            dialog[1] = battleData.getHero().getName() + "は魔物を倒した";
-            playerWin  = true;
-
-
-        //プレイヤーの敗北
-        }else if(!isPlayerTurn && result == 1){
-            dialog[1] = battleData.getHero().getName() +"は全滅した";
-            playerLose = true;
-
-        //逃げ出した
-        }else if(result == 2){
-            if(isPlayerTurn){
-                dialog[1] = battleData.getHero().getName() +  "は逃げ出した";
-            }else {
-                dialog[1] = battleData.getEnemy().getName() + "は逃げ出した";
-            }
-            runAway = true;
+//逃げるの表示場所は固定。commandは描画の時に使う数字であり、攻撃の種類を識別するcommandNumとは異なる。
+//現在は、攻撃種類が増えたときどのように表示するか決めていないので疑似的にcommand = commandNumとしている
+    public void processAction(int commandNum, Character attacker,Character target){
+        if(commandNum == -1){
+            escapeSuccessful = operation.runAway(attacker);
+        }else{
+            dialog[0] = operation.damageOperation(commandNum, attacker, target);
         }
+        checkBattleEnd(commandNum,attacker,target);
+        interval     = true;     
+        endTurnTime  = System.currentTimeMillis();   
     }
+
+    public void checkBattleEnd(int commandNum, Character attacker, Character target){
+
+        if(!escapeSuccessful){
+            //戦闘続行
+            if(target.isAlive()){
+                if(commandNum == -1){
+                    dialog[0] = attacker.getName() +"は逃げようとしたが回り込まれた";
+                }
+
+                isPlayerTurn = !isPlayerTurn;
+
+            //プレイヤーの勝利
+            }else if(isPlayerTurn){
+                dialog[1] = battleData.getHero().getName() + "は魔物を倒した";
+                playerWin  = true;
+
+            //プレイヤーの敗北
+            }else if(!isPlayerTurn){
+                dialog[1] = battleData.getHero().getName() +"は全滅した";
+                playerLose = true;
+            }
+
+        }else{
+                dialog[0] = attacker.getName() + "逃げ出した";
+        }
+
+    }
+
+    
 
     //本来は行動の選択をさせるメソッド。
     public void selectAction(KeyInputHandler key){
+        int commandNum;
         if(!interval){
             if(ableToPress && isPlayerTurn){
                 if     (key.isKeyPressed(KeyEvent.VK_S) && command < 2) {
@@ -121,19 +138,37 @@ public class BattleModel{
                 }
             
                 if(key.isKeyPressed(KeyEvent.VK_E)){
-                    processAction(battleData.getHero(),battleData.getEnemy());
+                    if(command == 2){
+                        commandNum = -1;
+                    }else{
+                        commandNum = command;
+                    }
+                    processAction(commandNum,battleData.getHero(),battleData.getEnemy());
                 
                 }
             }
         }
     }
-        
 
+    public void viewStatus(KeyInputHandler key){
+
+        if(levelup){
+            if(key.isKeyPressed(KeyEvent.VK_R)){
+                    changeToMap = true;
+            }
+        }else{
+                    changeToMap = true;
+        }
+    }
+
+        
+//キーを押した瞬間の時間を記録
      public void pressed(){
         ableToPress = false;
         finalPressedTime = System.currentTimeMillis();
     }
 
+//ある時点から十分に時間が経過したか確かめる
     public void checkAbleToPressed(){
         currentTime = System.currentTimeMillis();
         if(currentTime - finalPressedTime > delaypressSpeed){
@@ -154,6 +189,8 @@ public class BattleModel{
         }
     }
 
+
+//以下、is○○やget○○のメソッドのみ記述
     public int getCommand(){
         return command;
     }
@@ -172,13 +209,21 @@ public class BattleModel{
         return false;
     }
 
-    public boolean isrun(){
+    public boolean isRun(){
         if(!interval){
-            return runAway;
+            return escapeSuccessful;
         }
         return false;
     }
-    public boolean isbossDefeat(){
+
+    public boolean isChangeToMap(){
+        if(!interval){
+            return changeToMap;
+        }
+        return false;
+    }
+
+    public boolean isBossDefeat(){
         if(!interval){
             return bossDefeat;
         }

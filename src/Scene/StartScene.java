@@ -9,7 +9,7 @@ import GameEngine.Game;
 
 public class StartScene extends Scene{
 
-    int y = 0;
+    int y = 400;
 
     public StartScene(Game game){
         this.game = game;
