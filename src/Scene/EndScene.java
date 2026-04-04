@@ -17,7 +17,7 @@ public class EndScene extends Scene{
     public EndScene(Game game,int result){
         this.game = game;
 
-        timer = new TimeCount();
+        timer = new TimeCount(3);
         timer.timerSet(3);
 
 

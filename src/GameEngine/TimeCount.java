@@ -6,7 +6,7 @@ public class TimeCount{
     private int timer;
     private int fpsCnt;
 
-    public TimeCount(){
+    public TimeCount(int timer){
         this.timer = timer;
         fpsCnt = 0;
     }

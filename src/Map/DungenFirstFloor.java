@@ -1,6 +1,6 @@
 package Map;
 
-public class TestMapData extends MapData{
+public class DungenFirstFloor extends MapData{
 
     private final int width = 25;
     private final int height = 25;
@@ -29,13 +29,13 @@ public class TestMapData extends MapData{
                                     {1,0,0,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1},//20
                                     {1,0,0,0,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,0,1},
                                     {1,0,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-                                    {1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1},
+                                    {1,0,0,0,0,0,0,0,0,0,0,0,1,1,3,0,0,0,0,0,0,0,0,0,1},
                                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}//24
                                     };
 
     private final boolean[][] collisionMap;
 
-    public TestMapData(){
+    public DungenFirstFloor(){
 
         collisionMap = new boolean[height][width];
         //タイルの種類で通過可能か識別
@@ -45,6 +45,8 @@ public class TestMapData extends MapData{
                     collisionMap[h][w] = true;
                 }else if(tileMap[h][w] == 1){
                     collisionMap[h][w] = false;
+                }else{
+                    collisionMap[h][w] =true;    //現在は2,3,4いづれも通過可能なのでtrueにしている。必要に応じて変える
                 }
             }
         }

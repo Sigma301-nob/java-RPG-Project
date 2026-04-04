@@ -43,12 +43,26 @@ public class MapView{
                 drawH = startH + (h * tileSize);
 
                 //タイルの種類は番号で管理。番号に応じてタイルの色を変える
+                //0;空白。プレイヤーが通過可能の領域
                 if(model.getCurrentMapData().getTileAt(w,h) == 0){
                     g.setColor(Color.DARK_GRAY);
+
+                //1;壁　プレイヤーが通過不可能な領域
                 }else if(model.getCurrentMapData().getTileAt(w, h) == 1){
                     g.setColor(Color.BLACK);
+
+                //2;ボス。　プレイヤーと座標が被ると戦闘開始(仮)
+                }else if(model.getCurrentMapData().getTileAt(w, h) == 2){
+                    g.setColor(Color.RED);
+
+                //上り階段。    
+                }else if(model.getCurrentMapData().getTileAt(w, h) == 3){
+                    g.setColor(Color.LIGHT_GRAY);
+
+                //下り階段    
+                }else if(model.getCurrentMapData().getTileAt(w, h) == 4){
+                    g.setColor(Color.WHITE);
                 }
-            
                 //タイルの中を塗りつぶし
                 g.fillRect(drawW, drawH, tileSize, tileSize);
 
@@ -60,12 +74,12 @@ public class MapView{
         }
 
         //プレイヤーの描画
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.fillRect(startW + (model.getPlayerX() * tileSize),startH + (model.getPlayerY() * tileSize), tileSize, tileSize);
-
 
 
         g.setColor(Color.BLACK);
         g.drawString("Spaceキーでエンカウント",500,850);
+        
     }
 }

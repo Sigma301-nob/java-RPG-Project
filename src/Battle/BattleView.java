@@ -10,6 +10,8 @@ import java.util.List;
 
 public class BattleView{
 
+    
+
     private String playerName;
     private int playerLevel;
     private int playerMaxhp,playerhp;
@@ -27,7 +29,7 @@ public class BattleView{
 
     private int selectAction;
 
-    private boolean isWin;
+    private boolean statusUpdate;
 
     private String [] dialog;
 
@@ -52,7 +54,7 @@ public class BattleView{
         turnNumber   = model.getTurnNumber();
 
         selectAction = model.getCommand();
-        isWin        = model.isWin();
+        statusUpdate = model.isLevelup();
         dialog       = model.getDialog();
 
         int dialogLine = 0;
@@ -62,7 +64,7 @@ public class BattleView{
         Font dialogFont = new Font("SansSerif", Font.PLAIN, 20);
         Font levelup    = new Font("SansSerif", Font.PLAIN, 32);
 
-        if(!isWin){
+        if(!statusUpdate){
             playerPreMaxhp = playerMaxhp;
             playerPreMaxmp = playerMaxmp;
             playerPreAtk   = playerAtk;
@@ -133,7 +135,7 @@ public class BattleView{
         }
 
         //レベルアップ時のステータス表示
-        if(isWin){
+        if(statusUpdate){
             g.setFont(levelup);
             g.drawRect(400,150,280,350);
             g.drawString("LEVEL UP!",450,200);

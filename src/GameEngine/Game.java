@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import Map.*;
 import Battle.*;
 import Scene.*;
+import Story.*;
 
 public class Game extends JFrame implements Runnable{
 

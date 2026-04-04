@@ -132,7 +132,7 @@ public class BattleModel{
                         command--;
                         pressed();
                 }
-                //動作確認用救済措置
+                //動作確認用回復措置
                 else if(key.isKeyPressed(KeyEvent.VK_H)){
                         battleData.getHero().fullHealHpAndMP();
                 }
@@ -205,6 +205,13 @@ public class BattleModel{
     public boolean isLose(){
         if(!interval){
             return playerLose;
+        }
+        return false;
+    }
+
+    public boolean isLevelup(){
+        if(!interval){
+            return levelup;
         }
         return false;
     }
