@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 
 import Map.*;
+import CharacterData.*;
 import Battle.*;
 import Scene.*;
 import Story.*;

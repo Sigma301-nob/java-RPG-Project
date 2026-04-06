@@ -1,5 +1,6 @@
 package Battle;
 
+import CharacterData.Character;
 import static java.lang.Math.random;
 
 //  コマンド、アタッカー、ターゲットを受け取って、ダメージ計算を行って反映、さらにダイアログを作成して返す。

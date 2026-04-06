@@ -1,5 +1,7 @@
 package Battle;
 
+import CharacterData.*;
+
 public class BattleLoader{ 
 
     private Hero hero;

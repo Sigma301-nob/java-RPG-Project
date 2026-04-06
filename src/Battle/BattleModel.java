@@ -3,6 +3,7 @@ package Battle;
 import java.awt.event.KeyEvent;
 
 import GameEngine.KeyInputHandler;
+import CharacterData.Character;
 
 import java.util.List;
 import java.util.Arrays;

@@ -10,41 +10,44 @@ import Story.*;
 
 public class StartScene extends Scene{
 
-    private Story01    story;
-    private StartModel model;
-    private StartView  view ;
-
-
-    private boolean    storytell;
+    private boolean      story;
+    private StartModel   startModel;
+    private Story01Model storyModel;
+    private StartView    startView ;
+    private Story01View  storyView ;
 
 
     public StartScene(Game game){
         this.game = game;
-        story = new Story01();
-        model = new StartModel();
-        view  = new StartView();
-
-        storytell = false;
+        startModel = new StartModel();
+        storyModel = new Story01Model();
+        startView  = new StartView();
+        storyView  = new Story01View();
+        story = false;
     }
 
     public void update(){
-        model.update(game.getKeyInputHandler());
-        if(story.isShiftToMap()){
-            game.changeScene(new MapScene(game));
-        }else if(model.isStartNewGame()){
-           storytell = true;
-        }else if(model.isEndGame()){
-            System.exit(0);
+        if(!story){
+            startModel.update(game.getKeyInputHandler());
+            if(startModel.isStartNewGame()){
+               story = true;
+            }else if(startModel.isEndGame()){
+                System.exit(0);
+            }
+        }else{
+            storyModel.update(game.getKeyInputHandler());
+            if(storyModel.isShiftToMap()){
+                game.changeScene(new MapScene(game));
+            }
         }
     }
 
     public void draw(Graphics g){
         super.paintComponent(g);
-
-        if(!storytell){
-            view.draw(g,model);
+        if(!story){
+            startView.draw(g,startModel);
         }else{
-            story.draw(g,game.getKeyInputHandler());
+            storyView.draw(g,storyModel);
         }
     }
 }

@@ -5,6 +5,7 @@ import java.awt.Image;
 import static java.lang.Math.min;
 
 import GameEngine.Game;
+import MapStructure.*;
 
 import java.awt.Color;
 

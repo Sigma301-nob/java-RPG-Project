@@ -6,6 +6,7 @@ import javax.security.auth.kerberos.KerberosTicket;
 
 import GameEngine.*;
 import Map.*;
+import MapStructure.*;
 
 public class MapScene extends Scene{
      

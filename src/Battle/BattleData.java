@@ -1,5 +1,7 @@
 package Battle;
 
+import CharacterData.*;
+
 import java.util.List;
 
 public class BattleData{

@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import GameEngine.TimeCount;
 import GameEngine.KeyInputHandler;
+import MapStructure.*;
 
 
 public class MapModel{

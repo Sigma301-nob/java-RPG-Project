@@ -1,5 +1,7 @@
 package Map;
 
+import MapStructure.*;
+
 public class MapLoader{
     private MapData currentMapData;
     private MapModel currentMapModel;
