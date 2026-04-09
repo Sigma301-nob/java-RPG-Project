@@ -40,6 +40,7 @@ public class Hero extends Character{
         mp = maxmp;
     }
 
+    //名前を処理が一致していない。経験値の獲得とレベルアップの有無の判定の2つの役割を果たしている。わけるべき？
     public boolean isLevelup(int enemyLevel){
         exp += 60;
 

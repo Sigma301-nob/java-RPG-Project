@@ -9,7 +9,7 @@ public class BattleLoader{
     private BattleData battleData;
     private BattleModel battleModel;
 
-    public void createBattle(Hero hero){
+    public void createBattle(Hero hero, int monsterid){
 
         this.hero = hero;
         enemy = new Enemy(3);

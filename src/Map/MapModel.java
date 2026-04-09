@@ -29,7 +29,8 @@ public class MapModel{
 
 
 
-    private boolean encount;
+    private boolean encountEnemy;
+    private boolean encountBoss;
 
 
     public MapModel(MapData currentMapData,int mapId, int x,int y){
@@ -115,16 +116,24 @@ public class MapModel{
 
     public void checkEncounter(KeyInputHandler key){
         if(key.isKeyPressed(KeyEvent.VK_SPACE)){
-            encount = true;
+            encountEnemy = true;
+        }
+        if(currentMapData.getTileAt(playerX,playerY) == 2){
+            encountBoss  = true;
         }  
     }
 
     public void setEncountToFalse(){
-        encount = false;
+        encountEnemy = false;
+        encountBoss  = false;
     }
 
-    public boolean isEncount(){
-        return encount;
+    public boolean isEncountEnemy(){
+        return encountEnemy;
+    }
+
+    public boolean isEncountBoss(){
+        return encountBoss;
     }
 
     public int getPlayerX(){

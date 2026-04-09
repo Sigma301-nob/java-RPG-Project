@@ -38,8 +38,6 @@ public class Story01View {
 
         g.setFont(dialogFont);
 
-        g.drawString("sentence; " + sentence + model.test(),600,300);
-
         if(playerY < 450){
              g.setColor(Color.BLACK);
              g.fillRect(50,530,1100,300);

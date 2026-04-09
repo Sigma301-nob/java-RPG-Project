@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Font;
 
 import GameEngine.*;
 
@@ -41,10 +42,15 @@ public class EndScene extends Scene{
     public void draw(Graphics g){
         super.paintComponent(g);
 
+        Font title    = new Font("SansSerif", Font.PLAIN, 40);
+        Font option   = new Font("SansSerif", Font.PLAIN, 20);
+
+        g.setFont(title);
         g.setColor(Color.BLACK);
-        g.drawString(ending,600,450);
+        g.drawString(ending,470,450);
 
         //動作確認の都合上、ループ構造を作りたかったので追加した
+        g.setFont(option);
         g.drawString(timer.getTimer() +"秒後にスタート画面に戻る(初期化はされていない)",510,850);
            
     }

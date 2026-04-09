@@ -24,8 +24,14 @@ public class BattleOperation{
             return dialog;
 
             case 1:
-                damage = maginalAttack(attacker,target);
-                dialog = attacker.getName() + "は" + target.getName() + "に" + damage + "ダメージを与えた";
+                //MPが足りないとき、MP不足で攻撃失敗判定になっている。
+                //いつか、選択肢として選べないように変更したい。
+                if(attacker.getMp() > 2){
+                    damage = maginalAttack(attacker,target);
+                    dialog = attacker.getName() + "は" + target.getName() + "に" + damage + "ダメージを与えた";
+                }else{
+                    dialog = attacker.getName() + "のMPが足りなかった";
+                }
 
             return dialog;
 

@@ -21,7 +21,6 @@ public class BattleModel{
     private boolean playerWin;
     private boolean playerLose;
     private boolean escapeSuccessful;
-    private boolean bossDefeat;
     private boolean changeToMap;
 
     private boolean ableToPress;        //動いて一定時間はfalseになる
@@ -52,7 +51,6 @@ public class BattleModel{
         playerWin        = false;
         playerLose       = false;
         escapeSuccessful = false;
-        bossDefeat       = false;
         changeToMap      = false;
     }
 
@@ -227,13 +225,6 @@ public class BattleModel{
     public boolean isChangeToMap(){
         if(!interval){
             return changeToMap;
-        }
-        return false;
-    }
-
-    public boolean isBossDefeat(){
-        if(!interval){
-            return bossDefeat;
         }
         return false;
     }

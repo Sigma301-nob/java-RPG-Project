@@ -25,9 +25,10 @@ public class MapScene extends Scene{
     public void update(){
         model.update(game.getKeyInputHandler());
 
-        if(model.isEncount()){
-
+        if(model.isEncountEnemy()){
             game.changeScene(new BattleScene(game));
+        }else if(model.isEncountBoss()){
+            game.changeScene(new BattleScene(game,0));
         }
     }
 

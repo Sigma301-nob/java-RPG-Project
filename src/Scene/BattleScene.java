@@ -13,9 +13,20 @@ public class BattleScene extends Scene{
     private BattleView  view;
     private BattleModel model;
 
+    private int monsterId;
+
     public BattleScene(Game game){
         this.game = game;
-        game.getBattleLoader().createBattle(game.getHero()); 
+        monsterId = -1;
+        game.getBattleLoader().createBattle(game.getHero(),monsterId); 
+        model = game.getBattleLoader().getBattleModel();
+        view  = new BattleView();
+    }
+
+    public BattleScene(Game game, int monsterId){
+        this.game      = game;
+        this.monsterId = monsterId;
+        game.getBattleLoader().createBattle(game.getHero(),monsterId); 
         model = game.getBattleLoader().getBattleModel();
         view  = new BattleView();
     }
@@ -25,7 +36,7 @@ public class BattleScene extends Scene{
 
         if(model.isChangeToMap() || model.isRun()){
             game.changeScene(new MapScene(game));
-        }else if(model.isBossDefeat()){
+        }else if(model.isWin() && monsterId == 0){
             game.changeScene(new EndScene(game,0));
         }else if(model.isLose()){
             game.changeScene(new EndScene(game,1));
