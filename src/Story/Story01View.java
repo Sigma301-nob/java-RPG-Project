@@ -12,6 +12,7 @@ public class Story01View {
     private int playerX;
     private int playerY;
     private int line;
+    private int sentence;
 
 
     public void draw(Graphics g, Story01Model model){
@@ -21,8 +22,8 @@ public class Story01View {
         kingDialog = model.getKingDialog();
         playerX    = model.getPlayerX();  
         playerY    = model.getPlayerY();
-        line = model.getLine();
-
+        line       = model.getLine();
+        sentence   = model.getsentence();
         g.setColor(Color.BLACK);
         g.fillRect(0,600,400,500);
         g.fillRect(800,600,400,500);
@@ -37,7 +38,7 @@ public class Story01View {
 
         g.setFont(dialogFont);
 
-        g.drawString("line; " + line,600,300);
+        g.drawString("sentence; " + sentence + model.test(),600,300);
 
         if(playerY < 450){
              g.setColor(Color.BLACK);
@@ -45,15 +46,11 @@ public class Story01View {
              g.setColor(Color.WHITE);
              g.drawRect(50,530,1100,300);
 
-             if(line < 3){
-                for(int i = 0;i < line; i++){
-                    g.drawString(kingDialog[line + i],100,600 + i*40);
-                }
-             }else{
-                for(int i = 0;i < 3; i++){
-                    g.drawString(kingDialog[line + i],100,600 + i*40);
-                }
-             }
+            
+            for(int i = 0;i < line + 1; i++){
+                g.drawString(kingDialog[(sentence - line) + i],100,600 + i*40);
+            }
+            
 
         }
     }
